@@ -3,11 +3,19 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AbilitySystemInterface.h"
 #include "PaperCharacter.h"
+#include "GameplayTagContainer.h"
 #include "RPGPaperCharacter.generated.h"
 
+struct FGameplayTagContainer;
+class URPGGameplayAbility;
+class URPGAbilitySystemComponent;
+class URPGAttributeSet;
+class UGameplayEffect;
+
 UCLASS()
-class COOLRPG_API ARPGPaperCharacter : public APaperCharacter
+class COOLRPG_API ARPGPaperCharacter : public APaperCharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
@@ -27,4 +35,30 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void PossessedBy(AController* NewController) override;
 	virtual void OnRep_PlayerState() override;
+
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	URPGAbilitySystemComponent* AbilitySystemComponent;
+
+	UPROPERTY()
+	URPGAttributeSet* Attributes;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Abilities")
+	TArray<TSubclassOf<UGameplayEffect>> PassiveGameplayEffects;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Abilities")
+	TArray<TSubclassOf<URPGGameplayAbility>> GameplayAbilities;
+
+	UPROPERTY()
+	uint8 bAbilitiesInitialized:1;
+
+	void AddStartupGameplayAbilities();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHealthChanged(float DeltaValue, const FGameplayTagContainer& EventTags);
+
+	virtual void HandleHealthChanged(float DeltaValue, const struct FGameplayTagContainer& EventTags);
+
+	friend URPGAttributeSet;
 };
