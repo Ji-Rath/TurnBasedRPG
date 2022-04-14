@@ -14,6 +14,7 @@ void URPGAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 
 	DOREPLIFETIME(URPGAttributeSet, Health);
 	DOREPLIFETIME(URPGAttributeSet, MaxHealth);
+	DOREPLIFETIME(URPGAttributeSet, Strength);
 }
 
 void URPGAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
@@ -70,6 +71,11 @@ void URPGAttributeSet::OnRep_Health(const FGameplayAttributeData& OldValue)
 void URPGAttributeSet::OnRep_MaxHealth(const FGameplayAttributeData& OldValue)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(URPGAttributeSet, MaxHealth, OldValue);
+}
+
+void URPGAttributeSet::OnRep_Strength(const FGameplayAttributeData& OldValue)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(URPGAttributeSet, Strength, OldValue);
 }
 
 void URPGAttributeSet::AdjustAttributeForMaxChange(const FGameplayAttributeData& AffectedAttribute,

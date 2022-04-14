@@ -39,9 +39,16 @@ public:
 	UFUNCTION()
 	virtual void OnRep_MaxHealth(const FGameplayAttributeData& OldValue);
 
+	UFUNCTION()
+		virtual void OnRep_Strength(const FGameplayAttributeData& OldValue);
+
 	void AdjustAttributeForMaxChange(
 		const FGameplayAttributeData& AffectedAttribute,
 		const FGameplayAttributeData& MaxAttribute,
 		float NewMaxValue,
 		const FGameplayAttribute& AffectedAttributeProperty) const;
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Strength, Category = "Attributes")
+		FGameplayAttributeData Strength;
+	ATTRIBUTE_ACCESSORS(URPGAttributeSet, Strength)
 };

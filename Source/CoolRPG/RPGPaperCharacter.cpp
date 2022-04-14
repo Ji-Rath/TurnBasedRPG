@@ -27,6 +27,11 @@ void ARPGPaperCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	if (AbilitySystemComponent)
+	{
+		AbilitySystemComponent->InitAbilityActorInfo(this, this);
+		AddStartupGameplayAbilities();
+	}
 }
 
 // Called every frame
@@ -57,11 +62,7 @@ void ARPGPaperCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
 
-	if (AbilitySystemComponent)
-	{
-		AbilitySystemComponent->InitAbilityActorInfo(this, this);
-		AddStartupGameplayAbilities();
-	}
+	
 }
 
 void ARPGPaperCharacter::OnRep_PlayerState()
