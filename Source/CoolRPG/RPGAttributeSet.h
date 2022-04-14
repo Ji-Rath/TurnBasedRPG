@@ -33,6 +33,18 @@ public:
 	FGameplayAttributeData MaxHealth;
 	ATTRIBUTE_ACCESSORS(URPGAttributeSet, MaxHealth)
 
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Strength, Category = "Attributes")
+	FGameplayAttributeData Strength;
+	ATTRIBUTE_ACCESSORS(URPGAttributeSet, Strength)
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Speed, Category = "Attributes")
+	FGameplayAttributeData Speed;
+	ATTRIBUTE_ACCESSORS(URPGAttributeSet, Speed)
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Level, Category = "Attributes")
+	FGameplayAttributeData Level;
+	ATTRIBUTE_ACCESSORS(URPGAttributeSet, Level)
+
 	UFUNCTION()
 	virtual void OnRep_Health(const FGameplayAttributeData& OldValue);
 	
@@ -40,15 +52,17 @@ public:
 	virtual void OnRep_MaxHealth(const FGameplayAttributeData& OldValue);
 
 	UFUNCTION()
-		virtual void OnRep_Strength(const FGameplayAttributeData& OldValue);
+	virtual void OnRep_Strength(const FGameplayAttributeData& OldValue);
+
+	UFUNCTION()
+	virtual void OnRep_Level(const FGameplayAttributeData& OldValue);
+	
+	UFUNCTION()
+	virtual void OnRep_Speed(const FGameplayAttributeData& OldValue);
 
 	void AdjustAttributeForMaxChange(
 		const FGameplayAttributeData& AffectedAttribute,
 		const FGameplayAttributeData& MaxAttribute,
 		float NewMaxValue,
 		const FGameplayAttribute& AffectedAttributeProperty) const;
-	
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Strength, Category = "Attributes")
-		FGameplayAttributeData Strength;
-	ATTRIBUTE_ACCESSORS(URPGAttributeSet, Strength)
 };

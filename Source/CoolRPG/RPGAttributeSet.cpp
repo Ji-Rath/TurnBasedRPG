@@ -15,6 +15,8 @@ void URPGAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	DOREPLIFETIME(URPGAttributeSet, Health);
 	DOREPLIFETIME(URPGAttributeSet, MaxHealth);
 	DOREPLIFETIME(URPGAttributeSet, Strength);
+	DOREPLIFETIME(URPGAttributeSet, Level);
+	DOREPLIFETIME(URPGAttributeSet, Speed);
 }
 
 void URPGAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
@@ -78,9 +80,19 @@ void URPGAttributeSet::OnRep_Strength(const FGameplayAttributeData& OldValue)
 	GAMEPLAYATTRIBUTE_REPNOTIFY(URPGAttributeSet, Strength, OldValue);
 }
 
+void URPGAttributeSet::OnRep_Level(const FGameplayAttributeData& OldValue)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(URPGAttributeSet, Level, OldValue);
+}
+
+void URPGAttributeSet::OnRep_Speed(const FGameplayAttributeData& OldValue)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(URPGAttributeSet, Speed, OldValue);
+}
+
 void URPGAttributeSet::AdjustAttributeForMaxChange(const FGameplayAttributeData& AffectedAttribute,
-	const FGameplayAttributeData& MaxAttribute, float NewMaxValue,
-	const FGameplayAttribute& AffectedAttributeProperty) const
+                                                   const FGameplayAttributeData& MaxAttribute, float NewMaxValue,
+                                                   const FGameplayAttribute& AffectedAttributeProperty) const
 {
 	UAbilitySystemComponent* AbilityComp = GetOwningAbilitySystemComponent();
 	const float CurrentMaxValue = MaxAttribute.GetCurrentValue();
