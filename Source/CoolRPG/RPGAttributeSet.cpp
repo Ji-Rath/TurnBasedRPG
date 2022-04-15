@@ -17,6 +17,8 @@ void URPGAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	DOREPLIFETIME(URPGAttributeSet, Strength);
 	DOREPLIFETIME(URPGAttributeSet, Level);
 	DOREPLIFETIME(URPGAttributeSet, Speed);
+	DOREPLIFETIME(URPGAttributeSet, XP);
+	DOREPLIFETIME(URPGAttributeSet, XPLevelUp);
 }
 
 void URPGAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
@@ -83,6 +85,16 @@ void URPGAttributeSet::OnRep_Strength(const FGameplayAttributeData& OldValue)
 void URPGAttributeSet::OnRep_Level(const FGameplayAttributeData& OldValue)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(URPGAttributeSet, Level, OldValue);
+}
+
+void URPGAttributeSet::OnRep_XP(const FGameplayAttributeData& OldValue)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(URPGAttributeSet, XP, OldValue);
+}
+
+void URPGAttributeSet::OnRep_XPLevelUp(const FGameplayAttributeData& OldValue)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(URPGAttributeSet, XPLevelUp, OldValue);
 }
 
 void URPGAttributeSet::OnRep_Speed(const FGameplayAttributeData& OldValue)

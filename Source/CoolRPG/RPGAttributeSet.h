@@ -44,6 +44,14 @@ public:
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Level, Category = "Attributes")
 	FGameplayAttributeData Level;
 	ATTRIBUTE_ACCESSORS(URPGAttributeSet, Level)
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_XP, Category = "Attributes")
+	FGameplayAttributeData XP;
+	ATTRIBUTE_ACCESSORS(URPGAttributeSet, XP)
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_XPLevelUp, Category = "Attributes")
+	FGameplayAttributeData XPLevelUp;
+	ATTRIBUTE_ACCESSORS(URPGAttributeSet, XPLevelUp)
 
 	UFUNCTION()
 	virtual void OnRep_Health(const FGameplayAttributeData& OldValue);
@@ -56,6 +64,12 @@ public:
 
 	UFUNCTION()
 	virtual void OnRep_Level(const FGameplayAttributeData& OldValue);
+
+	UFUNCTION()
+	virtual void OnRep_XP(const FGameplayAttributeData& OldValue);
+
+	UFUNCTION()
+	virtual void OnRep_XPLevelUp(const FGameplayAttributeData& OldValue);
 	
 	UFUNCTION()
 	virtual void OnRep_Speed(const FGameplayAttributeData& OldValue);
