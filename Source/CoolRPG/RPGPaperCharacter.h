@@ -60,5 +60,10 @@ public:
 
 	virtual void HandleHealthChanged(float DeltaValue, const struct FGameplayTagContainer& EventTags);
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnManaChanged(float DeltaValue, const FGameplayTagContainer& EventTags);
+
+	virtual void HandleManaChanged(float DeltaValue, const struct FGameplayTagContainer& EventTags);
+
 	friend URPGAttributeSet;
 };

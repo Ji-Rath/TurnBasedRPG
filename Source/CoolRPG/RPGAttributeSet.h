@@ -53,6 +53,14 @@ public:
 	FGameplayAttributeData XPLevelUp;
 	ATTRIBUTE_ACCESSORS(URPGAttributeSet, XPLevelUp)
 
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Mana, Category = "Attributes")
+	FGameplayAttributeData Mana;
+	ATTRIBUTE_ACCESSORS(URPGAttributeSet, Mana)
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_MaxMana, Category = "Attributes")
+	FGameplayAttributeData MaxMana;
+	ATTRIBUTE_ACCESSORS(URPGAttributeSet, MaxMana)
+
 	UFUNCTION()
 	virtual void OnRep_Health(const FGameplayAttributeData& OldValue);
 	
@@ -73,6 +81,12 @@ public:
 	
 	UFUNCTION()
 	virtual void OnRep_Speed(const FGameplayAttributeData& OldValue);
+
+	UFUNCTION()
+	virtual void OnRep_Mana(const FGameplayAttributeData& OldValue);
+
+	UFUNCTION()
+	virtual void OnRep_MaxMana(const FGameplayAttributeData& OldValue);
 
 	void AdjustAttributeForMaxChange(
 		const FGameplayAttributeData& AffectedAttribute,

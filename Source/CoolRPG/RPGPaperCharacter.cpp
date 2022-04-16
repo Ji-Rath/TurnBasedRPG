@@ -131,3 +131,11 @@ void ARPGPaperCharacter::HandleHealthChanged(float DeltaValue, const FGameplayTa
 	}
 }
 
+void ARPGPaperCharacter::HandleManaChanged(float DeltaValue, const FGameplayTagContainer& EventTags)
+{
+	if (bAbilitiesInitialized)
+	{
+		OnManaChanged(DeltaValue, EventTags);
+	}
+}
+

@@ -19,6 +19,8 @@ void URPGAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	DOREPLIFETIME(URPGAttributeSet, Speed);
 	DOREPLIFETIME(URPGAttributeSet, XP);
 	DOREPLIFETIME(URPGAttributeSet, XPLevelUp);
+	DOREPLIFETIME(URPGAttributeSet, Mana);
+	DOREPLIFETIME(URPGAttributeSet, MaxMana);
 }
 
 void URPGAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
@@ -54,6 +56,16 @@ void URPGAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 			TargetCharacter->HandleHealthChanged(DeltaValue, SourceTags);
 		}
 	}
+
+	if (Data.EvaluatedData.Attribute == GetManaAttribute())
+	{
+		SetMana(FMath::Clamp(GetMana(), 0.f, GetMaxMana()));
+
+		if (TargetCharacter)
+		{
+			TargetCharacter->HandleManaChanged(DeltaValue, SourceTags);
+		}
+	}
 	
 }
 
@@ -64,6 +76,11 @@ void URPGAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, f
 	if (Attribute == GetMaxHealthAttribute())
 	{
 		AdjustAttributeForMaxChange(Health, MaxHealth, NewValue, GetHealthAttribute());
+	}
+
+	if (Attribute == GetMaxManaAttribute())
+	{
+		AdjustAttributeForMaxChange(Mana, MaxMana, NewValue, GetManaAttribute());
 	}
 }
 
@@ -100,6 +117,16 @@ void URPGAttributeSet::OnRep_XPLevelUp(const FGameplayAttributeData& OldValue)
 void URPGAttributeSet::OnRep_Speed(const FGameplayAttributeData& OldValue)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(URPGAttributeSet, Speed, OldValue);
+}
+
+void URPGAttributeSet::OnRep_Mana(const FGameplayAttributeData& OldValue)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(URPGAttributeSet, Mana, OldValue);
+}
+
+void URPGAttributeSet::OnRep_MaxMana(const FGameplayAttributeData& OldValue)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(URPGAttributeSet, MaxMana, OldValue);
 }
 
 void URPGAttributeSet::AdjustAttributeForMaxChange(const FGameplayAttributeData& AffectedAttribute,
