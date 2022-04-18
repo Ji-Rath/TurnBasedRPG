@@ -65,5 +65,13 @@ public:
 
 	virtual void HandleManaChanged(float DeltaValue, const struct FGameplayTagContainer& EventTags);
 
+	UFUNCTION(BlueprintCallable)
+	TArray<uint8> GetSaveInfo();
+
+	UFUNCTION(BlueprintCallable)
+	void LoadSaveInfo(TArray<uint8> SaveInfo);
+
+	URPGAttributeSet* GetAttributeData();
+
 	friend URPGAttributeSet;
 };

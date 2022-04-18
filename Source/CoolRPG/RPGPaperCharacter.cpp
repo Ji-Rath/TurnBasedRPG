@@ -6,6 +6,7 @@
 #include "RPGAbilitySystemComponent.h"
 #include "RPGAttributeSet.h"
 #include "RPGGameplayAbility.h"
+#include "Serialization/ObjectAndNameAsStringProxyArchive.h"
 
 
 // Sets default values
@@ -138,4 +139,42 @@ void ARPGPaperCharacter::HandleManaChanged(float DeltaValue, const FGameplayTagC
 		OnManaChanged(DeltaValue, EventTags);
 	}
 }
+
+TArray<uint8> ARPGPaperCharacter::GetSaveInfo()
+{
+	TArray<uint8> ByteData;
+	
+	// Pass the array to fill with data from Actor
+	FMemoryWriter MemWriter(ByteData);
+
+	FObjectAndNameAsStringProxyArchive Ar(MemWriter, true);
+	// Find only variables with UPROPERTY(SaveGame)
+	//Ar.ArIsSaveGame = true;
+
+	if (Attributes)
+	{
+		// Converts Actor's SaveGame UPROPERTIES into binary array
+		Attributes->Serialize(Ar);
+		UE_LOG(LogTemp, Error, TEXT("CURRENT HEALTH: %f"), Attributes->Health.GetCurrentValue());
+	}
+
+	return ByteData;
+}
+
+void ARPGPaperCharacter::LoadSaveInfo(TArray<uint8> SaveInfo)
+{
+	FMemoryReader MemReader(SaveInfo);
+
+	FObjectAndNameAsStringProxyArchive Ar(MemReader, true);
+	//Ar.ArIsSaveGame = true;
+	
+	if (Attributes)
+	{
+		// Converts Actor's SaveGame UPROPERTIES into binary array
+		Attributes->Serialize(Ar);
+		UE_LOG(LogTemp, Error, TEXT("CURRENT HEALTH: %f"), Attributes->Health.GetCurrentValue());
+	}
+}
+
+
 
