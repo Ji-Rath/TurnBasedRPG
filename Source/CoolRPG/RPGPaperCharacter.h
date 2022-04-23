@@ -6,6 +6,7 @@
 #include "AbilitySystemInterface.h"
 #include "PaperCharacter.h"
 #include "GameplayTagContainer.h"
+#include "Interaction/ItemData.h"
 #include "RPGPaperCharacter.generated.h"
 
 struct FGameplayTagContainer;
@@ -13,6 +14,16 @@ class URPGGameplayAbility;
 class URPGAbilitySystemComponent;
 class URPGAttributeSet;
 class UGameplayEffect;
+
+USTRUCT(BlueprintType)
+struct FRPGItemInfo : public FItemInfo
+{
+	GENERATED_BODY()
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Info")
+	TSubclassOf<UGameplayEffect> EffectOnUse;
+};
+
 
 UCLASS()
 class COOLRPG_API ARPGPaperCharacter : public APaperCharacter, public IAbilitySystemInterface
