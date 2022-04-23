@@ -6,6 +6,7 @@
 #include "RPGAbilitySystemComponent.h"
 #include "RPGAttributeSet.h"
 #include "RPGGameplayAbility.h"
+#include "Inventory/InventoryComponent.h"
 #include "Serialization/ObjectAndNameAsStringProxyArchive.h"
 
 
@@ -155,6 +156,11 @@ TArray<uint8> ARPGPaperCharacter::GetSaveInfo()
 	{
 		// Converts Actor's SaveGame UPROPERTIES into binary array
 		Attributes->Serialize(Ar);
+		if (UInventoryComponent* InventoryComp = FindComponentByClass<UInventoryComponent>())
+		{
+			InventoryComp->Serialize(Ar);
+			//UE_LOG(LogTemp, Error, TEXT("Retrieved inventory info"));
+		}
 		UE_LOG(LogTemp, Error, TEXT("CURRENT HEALTH: %f"), Attributes->Health.GetCurrentValue());
 	}
 
@@ -172,6 +178,11 @@ void ARPGPaperCharacter::LoadSaveInfo(TArray<uint8> SaveInfo)
 	{
 		// Converts Actor's SaveGame UPROPERTIES into binary array
 		Attributes->Serialize(Ar);
+		if (UInventoryComponent* InventoryComp = FindComponentByClass<UInventoryComponent>())
+		{
+			InventoryComp->Serialize(Ar);
+			//UE_LOG(LogTemp, Error, TEXT("Loaded inventory info"));
+		}
 		UE_LOG(LogTemp, Error, TEXT("CURRENT HEALTH: %f"), Attributes->Health.GetCurrentValue());
 	}
 }

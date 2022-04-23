@@ -71,7 +71,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void LoadSaveInfo(TArray<uint8> SaveInfo);
 
-	URPGAttributeSet* GetAttributeData();
+	URPGAttributeSet* GetAttributeData(); 
 
 	friend URPGAttributeSet;
 };
