@@ -6,7 +6,7 @@
 #include "AbilitySystemInterface.h"
 #include "PaperCharacter.h"
 #include "GameplayTagContainer.h"
-#include "Interaction/ItemData.h"
+#include "Inventory/InventoryInfo.h"
 #include "RPGPaperCharacter.generated.h"
 
 struct FGameplayTagContainer;
@@ -16,7 +16,7 @@ class URPGAttributeSet;
 class UGameplayEffect;
 
 USTRUCT(BlueprintType)
-struct FRPGItemInfo : public FItemInfo
+struct FRPGItemInfo : public FItemData
 {
 	GENERATED_BODY()
 	
